@@ -13,11 +13,49 @@
 (some #(= 1 %) [1 2 3])
 (int -1)
 (def my-map {})
-(map #(
-       (if (some #(= ) test-list2)
-         (println %1))
-       ) test-list1)
+(def new-list [])
 (abs -1)
 (reduce + (map #(abs (- %1 %2)) test-list1 test-list2))
 (reduce + (map #(- %1 %2) test-list1 test-list2))
 (reduce + (map #(abs (- %1 %2)) sorted-list1 sorted-list2))
+
+(map (fn [x]
+       [(count (filter #(= x %) test-list2)) x]) test-list1)
+(map (fn [x]
+       ["bla" x]) test-list1)
+
+
+(def mapa-ocorrencias-teste (->> test-list1
+                           (map (fn [x]
+                                  [(count (filter #(= x %) test-list2)) x]))
+                           (into {})
+                           (map (fn [x]
+                               [(first x) (* (first x) (last x))]))
+                           (into {})))
+(reduce + (map #(* (first %) (last %)) mapa-ocorrencias-teste))
+
+
+(def mapa-ocorrencias (->> list1
+                                 (map (fn [x]
+                                        [x (count (filter #(= x %) list2))]))
+                                 (into {})
+                                 (map (fn [x]
+                                        [(first x) (* (first x) (last x))]))
+                                 (into {})))
+(reduce + (vals mapa-ocorrencias))
+(reduce + (map #(* (first %) (last %)) mapa-ocorrencias))
+
+
+(take 3 mapa-ocorrencias)
+(into {} (map (fn [x]
+                [(first x) (* (first x) (last x))]) mapa-ocorrencias-teste))
+(->> (map #(* (first %) (last %)) mapa-ocorrencias-teste)
+     (map ())
+
+     )
+(reduce + (map #(* (first %) (last %)) mapa-ocorrencias-teste))
+
+(* (keys mapa-ocorrencias))
+
+(map #(= %1 %2) test-list1 test-list2)
+(map #((if (= %1 %2) (println %1))) test-list1 test-list2)
